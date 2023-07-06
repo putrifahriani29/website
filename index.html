@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Peta Mochi Sukabumi</title>
+    <style>
+        #map {
+            height: 400px;
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+    <h1>Peta Mochi Sukabumi</h1>
+    <div id="map"></div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/openlayers/2.13.1/OpenLayers.js"></script>
+    <script>
+        function initMap() {
+            // Buat objek peta
+            var map = new OpenLayers.Map("map");
+
+            // Buat layer untuk OpenStreetMap
+            var mapLayer = new OpenLayers.Layer.OSM();
+
+            // Tambahkan layer ke peta
+            map.addLayer(mapLayer);
+
+            // Tentukan koordinat dan level zoom awal (Kota Sukabumi)
+            var lonLat = new OpenLayers.LonLat(106.9273, -6.9222).transform(
+                new OpenLayers.Projection("EPSG:4326"), // WGS84
+                map.getProjectionObject() // Sistem koordinat peta
+            );
+            var zoomLevel = 13;
+
+            // Posisikan peta pada koordinat dan level zoom awal
+            map.setCenter(lonLat, zoomLevel);
+
+            // Tambahkan marker foto studio 
+            var markers = [
+                {
+                    name: 'Mochi Kaswari Lampion',
+                    lon: 106.93033383290886,
+                    lat: -6.910296071906428,
+                    url: 'https://goo.gl/maps/DE4e7tELvkjKuL7Y7'
+                },
+                {
+                    name: 'Mochi A Yani',
+                    lon: 106.93059132485824,
+                    lat: -6.92103205611006,  
+                    url: 'https://goo.gl/maps/bcACtFEiKX5u3MUR9'
+
+                },
+                {
+                    name: 'Mochi 39',
+                    lon: 106.93377192370394,
+                    lat: -6.9220998689640965,
+                    url: 'https://goo.gl/maps/2dwosThBBYaCfDqd9'
+
+                },
+                {
+                    name: 'MOCHI KASWARI BAKAT JAYA',
+                    lon: 106.93144963188648,
+                    lat: -6.909273584518971, 
+                    url: 'https://goo.gl/maps/bjqmU3N1H4SXSUoj6'
+
+                },
+                {
+                    name: 'Mochi Srikandi Sukabumi',
+                    lon: 106.94957163163217,
+                    lat: -6.90576298940835, 
+                    url: 'https://goo.gl/maps/syJtvRffp75ijgYLA'
+
+                },
+                {
+                    name: 'Mochi Kaswari Mahkota',
+                    lon: 106.93016217152768,
+                    lat: -6.911062935995772, 
+                    url: 'https://goo.gl/maps/41fm1EfiyC6wwKqy7'
+
+                },
+                {
+                    name: 'Mochi kaswari Bakat Jaya',
+                    lon: 106.90259253038407,
+                    lat: -6.927230141740544, 
+                    url: 'https://goo.gl/maps/j8xQhiMKJQmJZFH87'
+
+                },
+                {
+                    name: 'Mochi Arjuna Wijaya',
+                    lon: 106.93059132498063,
+                    lat: -6.912894884061989, 
+                    url: 'https://goo.gl/maps/nuJSLjU81TdNW8XP9'
+                },
+                {
+                    name: 'Zahira Mochi Sukabumi',
+                    lon: 106.93976381577569,
+                    lat: -6.9181425318053416, 
+                    url: 'https://goo.gl/maps/CgcPuY98UuHHdVbh8'
+                }
+            ];
+
+            // Buat layer untuk marker
+            var markerLayer = new OpenLayers.Layer.Markers("Markers");
+            map.addLayer(markerLayer);
+
+            // Tambahkan marker ke layer
+            for (var i = 0; i < markers.length; i++) {
+                var marker = new OpenLayers.Marker(
+                    new OpenLayers.LonLat(markers[i].lon, markers[i].lat).transform(
+                        new OpenLayers.Projection("EPSG:4326"), // WGS84
+                        map.getProjectionObject() // Sistem koordinat peta
+                    )
+                );
+                markerLayer.addMarker(marker);
+
+                // Tambahkan event click untuk mengarahkan ke halaman destinasi
+                marker.events.register('click', marker, function() {
+                    window.location.href = this.url;
+                });
+            }
+        }
+
+        // Panggil fungsi initMap saat halaman selesai diload
+        window.onload = initMap;
+    </script>
+</body>
+</html>
